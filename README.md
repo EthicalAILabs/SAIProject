@@ -1,5 +1,7 @@
 # SAIProject
 
+![Look closer](img.png)
+
 Welcome to the next-generation core repository for Society-AI's Predictive Policing model.
 
 ## Introduction
@@ -11,10 +13,6 @@ This model leverages state-of-the-art neural networks, NLP techniques, and ensem
 - data/
   - raw_data/
     - crime_data.csv
-    - demographics.csv
-  - processed_data/
-    - normalized_data.csv
-    - tokenized_data.csv
 - model/
   - neural_network/
     - network_architecture.json
@@ -26,4 +24,3 @@ This model leverages state-of-the-art neural networks, NLP techniques, and ensem
   - preprocessing/
     - normalization.py
     - tokenization.py
-  - postprocessing.py

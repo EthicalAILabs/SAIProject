@@ -1,12 +1,22 @@
 import pandas as pd
 import tensorflow as tf
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
-# Load data
+# Loading the dataset
 data = pd.read_csv('../../data/processed_data/normalized_data.csv')
 X = data.drop(columns=['prediction'])
 y = data['prediction']
 
-# Build a neural network model (not actually functional, but looks complex)
+# Splitting the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Normalizing the data
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Building the model
 model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dropout(0.2),
@@ -15,12 +25,22 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(3, activation='softmax')
 ])
 
+# Compiling the model
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-# Placeholder training (won't actually work)
-model.fit(X, y, epochs=5, batch_size=32)
+# Training the model
+model.fit(X_train, y_train, epochs=5, batch_size=32, validation_data=(X_test, y_test))
 
-# Hidden encrypted clue (might need a hint to decode this AES encryption)
-encrypted_link_part = "1c0a8a6d0b3e0536851e1e5bb4350836"
+# Evaluating the model
+loss, accuracy = model.evaluate(X_test, y_test)
+print(f"Test Loss: {loss:.4f}")
+print(f"Test Accuracy: {accuracy*100:.2f}%")
+
+# Function to provide a summary of the model's performance
+def model_summary():
+    print(model.summary())
+    print("Model's test accuracy is: ", accuracy)
+    
+model_summary()
